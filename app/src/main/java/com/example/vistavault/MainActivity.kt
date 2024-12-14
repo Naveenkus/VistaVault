@@ -13,8 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.example.vistavault.presentation.homescreen.HomeScreen
 import com.example.vistavault.presentation.homescreen.HomeScreenViewModel
+import com.example.vistavault.presentation.navigation.NavGraph
 import com.example.vistavault.presentation.theme.VistaVaultTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,20 +26,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             VistaVaultTheme {
+                val navController = rememberNavController()
                 val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-                val viewModel = viewModel<HomeScreenViewModel> ()
                 Scaffold (
                     modifier = Modifier
                         .fillMaxSize()
                         .nestedScroll(scrollBehavior.nestedScrollConnection)
                 ){
-                    HomeScreen(
+                    NavGraph(
                         modifier = Modifier,
-                        scrollBehavior = scrollBehavior,
-                        images = viewModel.images,
-                        onImageClick = {},
-                        onSearchClick = {},
-                        onFABClick = {}
+                        navController = navController,
+                        scrollBehavior = scrollBehavior
                     )
                 }
             }

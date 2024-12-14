@@ -1,7 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
+//    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
@@ -52,6 +53,7 @@ android {
 
 dependencies {
     val lifecycle_version = "2.8.7"
+    val nav_version = "2.8.5"
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
@@ -79,7 +81,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
 
     // Kotlin serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
     // Retrofit with Kotlin serialization Converter
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
@@ -89,5 +91,8 @@ dependencies {
     implementation (platform("androidx.compose:compose-bom:2024.11.00"))
     implementation("io.coil-kt.coil3:coil-compose:3.0.4")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
+
+    // Navigation
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 
 }
