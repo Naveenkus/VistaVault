@@ -1,4 +1,4 @@
-package com.example.vistavault.domain
+package com.example.vistavault.domain.model
 
 data class UnsplashImage(
     val id: String,

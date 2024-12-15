@@ -1,9 +1,9 @@
 package com.example.vistavault.data.mapper
 
 import com.example.vistavault.data.remote.dto.UnsplashImageDto
-import com.example.vistavault.domain.UnsplashImage
+import com.example.vistavault.domain.model.UnsplashImage
 
-fun UnsplashImageDto.toDomainModel(): UnsplashImage{
+fun UnsplashImageDto.toDomainModel(): UnsplashImage {
     return UnsplashImage(
         id = this.id,
         imageUrlSmall = this.urls.small,

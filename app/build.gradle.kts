@@ -2,7 +2,9 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 //    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.10"
-    kotlin("plugin.serialization") version "2.0.21"
+    kotlin("plugin.serialization") version "1.9.10"
+    id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -42,7 +44,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -88,7 +90,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     // Coil
-    implementation (platform("androidx.compose:compose-bom:2024.11.00"))
+    implementation (platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("io.coil-kt.coil3:coil-compose:3.0.4")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.4")
 
@@ -98,4 +100,12 @@ dependencies {
     //Splash Api
     implementation ("androidx.core:core-splashscreen:1.0.0")
 
+    implementation("com.github.skydoves:cloudy:0.1.2")
+
+    //Dagger Hilt
+    val hilt = "2.51.1"
+    implementation("com.google.dagger:hilt-android:$hilt")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    ksp("com.google.dagger:hilt-android-compiler:$hilt")
+    ksp("com.google.dagger:hilt-compiler:$hilt")
 }

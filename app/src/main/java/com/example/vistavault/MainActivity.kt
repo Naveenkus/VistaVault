@@ -19,7 +19,9 @@ import com.example.vistavault.presentation.homescreen.HomeScreen
 import com.example.vistavault.presentation.homescreen.HomeScreenViewModel
 import com.example.vistavault.presentation.navigation.NavGraph
 import com.example.vistavault.presentation.theme.VistaVaultTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

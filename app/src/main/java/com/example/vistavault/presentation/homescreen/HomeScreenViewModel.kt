@@ -6,12 +6,17 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vistavault.data.mapper.toDomainModelList
-import com.example.vistavault.data.remote.dto.UnsplashImageDto
 import com.example.vistavault.di.AppModule
-import com.example.vistavault.domain.UnsplashImage
+import com.example.vistavault.domain.model.UnsplashImage
+import com.example.vistavault.domain.repository.ImageRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeScreenViewModel: ViewModel() {
+@HiltViewModel
+class HomeScreenViewModel @Inject constructor(
+    private val repository: ImageRepository
+): ViewModel() {
     var images : List<UnsplashImage> by mutableStateOf(emptyList())
         private set
 
@@ -20,8 +25,8 @@ class HomeScreenViewModel: ViewModel() {
     }
     private fun getImages() {
         viewModelScope.launch {
-            val result = AppModule.retrofitService.getEditorialFeedImages()
-            images = result.toDomainModelList()
+            val result = repository.getEditorialFeedImages()
+            images = result
         }
     }
 }
