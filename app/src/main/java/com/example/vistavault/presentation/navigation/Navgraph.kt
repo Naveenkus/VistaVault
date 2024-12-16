@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import coil3.Image
 import com.example.vistavault.presentation.FullImageScreen.FullImageScreen
+import com.example.vistavault.presentation.FullImageScreen.FullImageViewModel
 
 import com.example.vistavault.presentation.SearchScreen.SearchScreen
 import com.example.vistavault.presentation.favouritescreen.FavouritesScreen
@@ -51,11 +52,12 @@ fun NavGraph(
                 onBackClick = { navController.navigateUp() }
             )
         }
-        composable<Routes.FullImageScreen> {backStackEntry ->
-            val imageId = backStackEntry.toRoute<Routes.FullImageScreen>().imageId
+        composable<Routes.FullImageScreen> {
+            val fullImageViewModel : FullImageViewModel = hiltViewModel()
             FullImageScreen(
-                imageId = imageId,
-                onBackClick = { navController.navigateUp() }
+                image = fullImageViewModel.image,
+                onBackClick = { navController.navigateUp() },
+                onPhotographerImgClick = {}
             )
         }
         composable<Routes.ProfileScreen> {
