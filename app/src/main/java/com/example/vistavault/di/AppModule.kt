@@ -1,12 +1,16 @@
 package com.example.vistavault.di
 
+import android.content.Context
 import com.example.vistavault.data.remote.UnsplashApiService
+import com.example.vistavault.data.repository.AndroidImageDownloader
 import com.example.vistavault.data.repository.ImageRepositoryImpl
+import com.example.vistavault.domain.repository.Downloader
 import com.example.vistavault.domain.repository.ImageRepository
 import com.example.vistavault.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import retrofit2.Retrofit
@@ -32,5 +36,13 @@ object AppModule {
     @Singleton
     fun provideImageRepository( apiService: UnsplashApiService ) : ImageRepository {
         return ImageRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAndroidImageDownloader(
+        @ApplicationContext context : Context
+    ): Downloader {
+        return AndroidImageDownloader( context)
     }
 }

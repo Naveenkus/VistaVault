@@ -59,7 +59,10 @@ fun NavGraph(
                 image = fullImageViewModel.image,
                 onBackClick = { navController.navigateUp() },
                 onPhotographerNameClick = {profileLink ->
-                    navController.navigate(Routes.ProfileScreen(profileLink))}
+                    navController.navigate(Routes.ProfileScreen(profileLink))},
+                onImageDownloadClick = {url, title ->
+                    fullImageViewModel.downloadImage(url, title)
+                }
             )
         }
         composable<Routes.ProfileScreen> {backStackEntry ->
