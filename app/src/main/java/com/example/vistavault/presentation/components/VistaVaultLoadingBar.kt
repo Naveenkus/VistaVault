@@ -44,7 +44,5 @@ fun VistaVaultLoadingBar(
                 color = MaterialTheme.colorScheme.onBackground,
                 shape = CircleShape
             )
-    ){
-
-    }
+    )
 }

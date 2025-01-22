@@ -13,6 +13,7 @@ import androidx.navigation.toRoute
 import coil3.Image
 import com.example.vistavault.presentation.FullImageScreen.FullImageScreen
 import com.example.vistavault.presentation.FullImageScreen.FullImageViewModel
+import com.example.vistavault.presentation.ProfileScreen.ProfileScreen
 
 import com.example.vistavault.presentation.SearchScreen.SearchScreen
 import com.example.vistavault.presentation.favouritescreen.FavouritesScreen
@@ -57,11 +58,16 @@ fun NavGraph(
             FullImageScreen(
                 image = fullImageViewModel.image,
                 onBackClick = { navController.navigateUp() },
-                onPhotographerImgClick = {}
+                onPhotographerNameClick = {profileLink ->
+                    navController.navigate(Routes.ProfileScreen(profileLink))}
             )
         }
-        composable<Routes.ProfileScreen> {
-
+        composable<Routes.ProfileScreen> {backStackEntry ->
+            val profileLink = backStackEntry.toRoute<Routes.ProfileScreen>().profileLink
+            ProfileScreen(
+                ProfileLink = profileLink,
+                onBackClick = { navController.navigateUp() }
+            )
         }
     }
 }

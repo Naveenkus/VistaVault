@@ -45,7 +45,7 @@ import kotlin.math.max
 fun FullImageScreen(
     image: UnsplashImage?,
     onBackClick : () -> Unit,
-    onPhotographerImgClick : (String) -> Unit,
+    onPhotographerNameClick : (String) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     var showBars by rememberSaveable{ mutableStateOf(false) }
@@ -128,7 +128,7 @@ fun FullImageScreen(
             image = image,
             isVisible = showBars,
             onBackClick = onBackClick,
-            onPhotographerImgClick = onPhotographerImgClick,
+            onPhotographerNameClick = onPhotographerNameClick,
             onDownloadImgClick = {}
         )
     }

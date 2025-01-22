@@ -3,7 +3,6 @@ package com.example.vistavault.presentation.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.clickable
@@ -82,7 +81,7 @@ fun  FullImageViewTopBar(
     image : UnsplashImage?,
     isVisible: Boolean,
     onBackClick : () -> Unit,
-    onPhotographerImgClick : (String) -> Unit,
+    onPhotographerNameClick : (String) -> Unit,
     onDownloadImgClick : () -> Unit
 ){
     AnimatedVisibility(
@@ -108,7 +107,7 @@ fun  FullImageViewTopBar(
             Spacer(modifier = Modifier.width(10.dp))
             Column(
                 modifier = Modifier.clickable {
-                    image?.let { onPhotographerImgClick(it.photographerProfielImageUrl) } }
+                    image?.let { onPhotographerNameClick(it.photographerProfileLink) } }
             ) {
                 Text(
                     text = image?.photographerName ?: "",
