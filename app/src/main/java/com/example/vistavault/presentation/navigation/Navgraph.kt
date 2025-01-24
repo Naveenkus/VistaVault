@@ -1,16 +1,15 @@
 package com.example.vistavault.presentation.navigation
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import coil3.Image
 import com.example.vistavault.presentation.FullImageScreen.FullImageScreen
 import com.example.vistavault.presentation.FullImageScreen.FullImageViewModel
 import com.example.vistavault.presentation.ProfileScreen.ProfileScreen
@@ -25,7 +24,8 @@ import com.example.vistavault.presentation.homescreen.HomeScreenViewModel
 fun NavGraph(
     modifier: Modifier,
     navController: NavHostController,
-    scrollBehavior : TopAppBarScrollBehavior
+    scrollBehavior : TopAppBarScrollBehavior,
+    snackbarHostState: SnackbarHostState
 ) {
     NavHost(
         navController = navController,
@@ -35,6 +35,8 @@ fun NavGraph(
             val viewModel : HomeScreenViewModel = hiltViewModel()
             HomeScreen(
                 modifier = modifier,
+                snackbarHostState = snackbarHostState,
+                snackbarEvent = viewModel.snackbarEvent,
                 scrollBehavior = scrollBehavior,
                 images = viewModel.images,
                 onImageClick = {imageId ->
@@ -56,6 +58,8 @@ fun NavGraph(
         composable<Routes.FullImageScreen> {
             val fullImageViewModel : FullImageViewModel = hiltViewModel()
             FullImageScreen(
+                snackbarHostState = snackbarHostState,
+                snackbarEvent = fullImageViewModel.snackbarEvent,
                 image = fullImageViewModel.image,
                 onBackClick = { navController.navigateUp() },
                 onPhotographerNameClick = {profileLink ->
