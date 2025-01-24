@@ -6,10 +6,12 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import coil3.Image
 import com.example.vistavault.presentation.FullImageScreen.FullImageScreen
 import com.example.vistavault.presentation.FullImageScreen.FullImageViewModel
 import com.example.vistavault.presentation.ProfileScreen.ProfileScreen
