@@ -19,6 +19,7 @@ import com.example.vistavault.presentation.ProfileScreen.ProfileScreen
 
 import com.example.vistavault.presentation.SearchScreen.SearchScreen
 import com.example.vistavault.presentation.SearchScreen.SearchScreenViewModel
+import com.example.vistavault.presentation.favouritescreen.FavoritesViewModel
 import com.example.vistavault.presentation.favouritescreen.FavouritesScreen
 import com.example.vistavault.presentation.homescreen.HomeScreen
 import com.example.vistavault.presentation.homescreen.HomeScreenViewModel
@@ -67,8 +68,21 @@ fun NavGraph(
             )
         }
         composable<Routes.FavouritesScreen> {
+            val favoritesViewModel : FavoritesViewModel = hiltViewModel()
+            val favoriteImages = favoritesViewModel.favoriteImage.collectAsLazyPagingItems()
+            val favoritesImageIds by favoritesViewModel.favoriteImagesIds.collectAsStateWithLifecycle()
             FavouritesScreen (
-                onBackClick = { navController.navigateUp() }
+                onBackClick = { navController.navigateUp() },
+                favoriteImages = favoriteImages,
+                favoriteImageIds = favoritesImageIds,
+                snackbarHostState = snackbarHostState,
+                snackbarEvent = favoritesViewModel.snackbarEvent,
+                onImageClick = {imageId ->
+                    navController.navigate(Routes.FullImageScreen(imageId))
+                },
+                onToggleFavoriteStatus = { favoritesViewModel.toggleFavoriteStatus(it)},
+                onSearchClick = { navController.navigate(Routes.SearchScreen) },
+                scrollBehavior = scrollBehavior,
             )
         }
         composable<Routes.FullImageScreen> {

@@ -44,6 +44,7 @@ fun VistaVaultTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
     title: String = "Vista Vault",
     onSearchClick: () -> Unit,
+    navigationIcon: @Composable () -> Unit  = {}
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier,
@@ -71,7 +72,8 @@ fun VistaVaultTopAppBar(
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             scrolledContainerColor = MaterialTheme.colorScheme.background
-        )
+        ),
+        navigationIcon = navigationIcon
     )
 }
 

@@ -3,6 +3,7 @@ package com.example.vistavault.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.map
 import com.example.vistavault.data.local.VistaVaultDatabase
 import com.example.vistavault.data.mapper.toDomainModel
 import com.example.vistavault.data.mapper.toDomainModelList
@@ -13,6 +14,7 @@ import com.example.vistavault.domain.model.UnsplashImage
 import com.example.vistavault.domain.repository.ImageRepository
 import com.example.vistavault.util.Constants.ITEMS_PER_PAGE
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 
 class ImageRepositoryImpl(
@@ -34,6 +36,16 @@ class ImageRepositoryImpl(
             config = PagingConfig(pageSize = ITEMS_PER_PAGE),
             pagingSourceFactory = { SearchPagingSource(query, unsplashApi)}
         ).flow
+    }
+
+    override fun getAllFavoritesImages(): Flow<PagingData<UnsplashImage>> {
+        return Pager(
+            config = PagingConfig(pageSize = ITEMS_PER_PAGE),
+            pagingSourceFactory = { favoriteImagesDao.getAllFavoriteImages()}
+        ).flow
+            .map { pagingData ->
+                pagingData.map { it.toDomainModel() }
+            }
     }
 
     override suspend fun toggleFavoriteStatus(image: UnsplashImage) {
