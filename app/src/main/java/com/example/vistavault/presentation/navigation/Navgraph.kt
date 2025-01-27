@@ -6,17 +6,17 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import coil3.Image
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.vistavault.presentation.FullImageScreen.FullImageScreen
 import com.example.vistavault.presentation.FullImageScreen.FullImageViewModel
 import com.example.vistavault.presentation.ProfileScreen.ProfileScreen
 
 import com.example.vistavault.presentation.SearchScreen.SearchScreen
+import com.example.vistavault.presentation.SearchScreen.SearchScreenViewModel
 import com.example.vistavault.presentation.favouritescreen.FavouritesScreen
 import com.example.vistavault.presentation.homescreen.HomeScreen
 import com.example.vistavault.presentation.homescreen.HomeScreenViewModel
@@ -48,8 +48,17 @@ fun NavGraph(
             )
         }
         composable<Routes.SearchScreen> {
+            val searchScreeviewModel : SearchScreenViewModel = hiltViewModel()
+            val searchedImages = searchScreeviewModel.searchImages.collectAsLazyPagingItems()
             SearchScreen(
-                onBackClick = { navController.navigateUp() }
+                onBackClick = { navController.navigateUp() },
+                searchedImages = searchedImages,
+                snackbarHostState = snackbarHostState,
+                snackbarEvent = searchScreeviewModel.snackbarEvent,
+                onImageClick = {imageId ->
+                    navController.navigate(Routes.FullImageScreen(imageId))
+                },
+                onSearch = { searchScreeviewModel.searchImages(it) },
             )
         }
         composable<Routes.FavouritesScreen> {
