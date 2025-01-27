@@ -1,6 +1,8 @@
 package com.example.vistavault.di
 
 import android.content.Context
+import androidx.room.Room
+import com.example.vistavault.data.local.VistaVaultDatabase
 import com.example.vistavault.data.remote.UnsplashApiService
 import com.example.vistavault.data.repository.AndroidImageDownloader
 import com.example.vistavault.data.repository.ImageRepositoryImpl
@@ -9,6 +11,7 @@ import com.example.vistavault.domain.repository.Downloader
 import com.example.vistavault.domain.repository.ImageRepository
 import com.example.vistavault.domain.repository.NetworkConnectivityObserver
 import com.example.vistavault.util.Constants.BASE_URL
+import com.example.vistavault.util.Constants.VISTA_VAULT_DATABASE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,8 +42,24 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideImageRepository( apiService: UnsplashApiService ) : ImageRepository {
-        return ImageRepositoryImpl(apiService)
+    fun provideVistaVaultDatabase(
+        @ApplicationContext context : Context
+    ): VistaVaultDatabase {
+        return Room
+            .databaseBuilder(
+                context,
+                VistaVaultDatabase::class.java,
+                VISTA_VAULT_DATABASE
+            )
+            .build()
+    }
+    @Provides
+    @Singleton
+    fun provideImageRepository(
+        apiService: UnsplashApiService,
+        database: VistaVaultDatabase
+    ) : ImageRepository {
+        return ImageRepositoryImpl(apiService, database)
     }
 
     @Provides

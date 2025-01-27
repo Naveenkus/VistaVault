@@ -19,9 +19,11 @@ import com.example.vistavault.domain.model.UnsplashImage
 fun ImageVerticalGrid(
     modifier: Modifier,
     images : LazyPagingItems<UnsplashImage>,
+    favoriteImageIds: List<String>,
     onImageClick: (String) -> Unit,
     onImageDragStart :(UnsplashImage?) -> Unit,
-    onImageDragEnd: () -> Unit
+    onImageDragEnd: () -> Unit,
+    onToggleFavouriteStatus: (UnsplashImage) -> Unit
 ) {
     LazyVerticalStaggeredGrid(
         modifier = modifier,
@@ -43,7 +45,9 @@ fun ImageVerticalGrid(
                             onDragEnd = {onImageDragEnd()},
                             onDrag = {_, _ ->}
                         )
-                    }
+                    },
+                onToggleFavouriteStatus = { image?.let { onToggleFavouriteStatus(it) } },
+                isFavourite = favoriteImageIds.contains(image?.id),
             )
         }
     }

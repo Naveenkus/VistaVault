@@ -8,4 +8,7 @@ object Constants {
     const val BASE_URL = "https://api.unsplash.com/"
 
     const val ITEMS_PER_PAGE = 10
+
+    const val VISTA_VAULT_DATABASE = "unsplash_images.db"
+    const val FAVORITE_IMAGE_TABLE = "favourite_image_table"
 }

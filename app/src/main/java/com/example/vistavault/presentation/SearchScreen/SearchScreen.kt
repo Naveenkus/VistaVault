@@ -51,10 +51,12 @@ import kotlinx.coroutines.flow.Flow
 fun SearchScreen(
     onBackClick: () -> Unit,
     searchedImages: LazyPagingItems<UnsplashImage>,
+    favoriteImageIds: List<String>,
     snackbarHostState: SnackbarHostState,
     snackbarEvent: Flow<SnackbarEvent>,
     onSearch: (String) -> Unit,
-    onImageClick: (String) -> Unit
+    onImageClick: (String) -> Unit,
+    onToggleFavoriteStatus: (UnsplashImage) -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
@@ -139,12 +141,14 @@ fun SearchScreen(
             ImageVerticalGrid(
                 modifier = Modifier,
                 images = searchedImages,
+                favoriteImageIds = favoriteImageIds,
                 onImageClick = onImageClick,
                 onImageDragStart = {image ->
                     activeImage = image
                     showImagePreview = true
                 },
-                onImageDragEnd ={ showImagePreview = false }
+                onImageDragEnd ={ showImagePreview = false },
+                onToggleFavouriteStatus = onToggleFavoriteStatus
             )
         }
 
