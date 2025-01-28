@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import com.example.vistavault.R
 import com.example.vistavault.domain.model.UnsplashImage
 import com.example.vistavault.presentation.components.ImageVerticalGrid
@@ -38,7 +39,9 @@ fun HomeScreen(
     snackbarHostState: SnackbarHostState,
     snackbarEvent: Flow<SnackbarEvent>,
     scrollBehavior: TopAppBarScrollBehavior,
-    images : List<UnsplashImage>,
+    images : LazyPagingItems<UnsplashImage>,
+    favoriteImageIds: List<String>,
+    onToggleFavoriteStatus: (UnsplashImage) -> Unit,
     onImageClick : (String) -> Unit,
     onSearchClick : () -> Unit,
     onFABClick : () -> Unit
@@ -66,16 +69,18 @@ fun HomeScreen(
                 onSearchClick = onSearchClick,
                 scrollBehavior = scrollBehavior
             )
-//            ImageVerticalGrid(
-//                modifier = modifier,
-//                images = images,
-//                onImageClick = onImageClick,
-//                onImageDragStart = {image ->
-//                    activeImage = image
-//                    showImagePreview = true
-//                },
-//                onImageDragEnd ={ showImagePreview = false }
-//            )
+            ImageVerticalGrid(
+                modifier = Modifier,
+                images = images,
+                favoriteImageIds = favoriteImageIds,
+                onImageClick = onImageClick,
+                onImageDragStart = {image ->
+                    activeImage = image
+                    showImagePreview = true
+                },
+                onImageDragEnd ={ showImagePreview = false },
+                onToggleFavouriteStatus = onToggleFavoriteStatus
+            )
         }
         FloatingActionButton(
             modifier = Modifier.align(alignment = Alignment.BottomEnd).padding(24.dp),

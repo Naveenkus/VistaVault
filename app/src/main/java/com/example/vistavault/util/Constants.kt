@@ -11,4 +11,7 @@ object Constants {
 
     const val VISTA_VAULT_DATABASE = "unsplash_images.db"
     const val FAVORITE_IMAGE_TABLE = "favourite_image_table"
+    const val UNSPLASH_IMAGE_TABLE = "image_table"
+    const val REMOTE_KEYS_TABLE = "remote_keys_table"
+
 }

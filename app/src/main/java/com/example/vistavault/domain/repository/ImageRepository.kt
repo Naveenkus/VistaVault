@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface ImageRepository {
 
-    suspend fun getEditorialFeedImages() : List<UnsplashImage>
+    fun getEditorialFeedImages() : Flow<PagingData<UnsplashImage>>
 
     suspend fun getImage(imageId: String): UnsplashImage
 

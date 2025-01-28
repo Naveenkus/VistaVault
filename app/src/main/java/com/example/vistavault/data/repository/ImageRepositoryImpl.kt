@@ -1,5 +1,6 @@
 package com.example.vistavault.data.repository
 
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -8,6 +9,7 @@ import com.example.vistavault.data.local.VistaVaultDatabase
 import com.example.vistavault.data.mapper.toDomainModel
 import com.example.vistavault.data.mapper.toDomainModelList
 import com.example.vistavault.data.mapper.toFavouriteImageEntity
+import com.example.vistavault.data.paging.EditorialFeedRemoteMediator
 import com.example.vistavault.data.paging.SearchPagingSource
 import com.example.vistavault.data.remote.UnsplashApiService
 import com.example.vistavault.domain.model.UnsplashImage
@@ -17,14 +19,23 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 
+@OptIn(ExperimentalPagingApi::class)
 class ImageRepositoryImpl(
     private val unsplashApi: UnsplashApiService,
     private val database : VistaVaultDatabase
 ): ImageRepository {
 
     private val favoriteImagesDao = database.favoriteImageDao()
-    override suspend fun getEditorialFeedImages(): List<UnsplashImage> {
-        return unsplashApi.getEditorialFeedImages().toDomainModelList()
+    private val edittorialImagesDao = database.EditorialFeedDao()
+    override  fun getEditorialFeedImages(): Flow<PagingData<UnsplashImage>> {
+        return Pager(
+            config = PagingConfig(pageSize = ITEMS_PER_PAGE),
+            remoteMediator = EditorialFeedRemoteMediator(unsplashApi, database),
+            pagingSourceFactory = { edittorialImagesDao.getAllEditorialFeedImages()}
+        ).flow
+            .map { pagingData ->
+                pagingData.map { it.toDomainModel() }
+            }
     }
 
     override suspend fun getImage(imageId: String): UnsplashImage {
